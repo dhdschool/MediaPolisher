@@ -5,7 +5,7 @@ description = "An attempt at a personalized \"newspaper\" style AI tool that pro
 authors = [
     {name = "dhdschool",email = "dhdschool@outlook.com"}
 ]
-license = {text = "GPL-3.0"}
+license = "GPL-3.0-only"
 readme = "README.md"
 requires-python = ">=3.13,<4.0"
 dependencies = [
