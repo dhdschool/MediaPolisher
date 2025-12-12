@@ -1,0 +1,46 @@
+env_file:
+  - .env.secrets
+
+services:
+  db:
+    image: postgres:16-alpine # Lightweight and robust image
+    container_name: media_db
+    restart: always
+    environment:
+      # POSTGRES variables are needed to initialize the DB and are substituted
+      # from the .env.secrets file loaded above.
+      POSTGRES_USER: ${MP_DB_USER}
+      POSTGRES_PASSWORD: ${MP_DB_PASSWORD}
+      POSTGRES_DB: media_polisher_db
+    ports:
+      - "5432:5432" # Optional: Expose for local SQL client access
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./api_gateway/Dockerfile
+    container_name: api_gateway
+    restart: on-failure
+
+    ports:
+      - "8080:8000"
+    environment:
+      - MP_JWT_PRIVATE_KEY: ${MP_JWT_PRIVATE_KEY}
+      - MP_DB_SERVICE_URL: http://database-service:8000
+      - MP_LOG_LEVEL: INFO
+
+    depends_on:
+      - database-service
+
+  database-service:
+    build:
+      context: .
+      dockerfile: ./database_service/Dockerfile
+    environment:
+      - MP_DB_SERVICE_URL: postgresql+asyncpg://${MP_DB_USER}:${MP_DB_PASSWORD}@db:5432/media_polisher_db
+      - MP_JWT_PRIVATE_KEY: ${MP_JWT_PRIVATE_KEY}
+      - MP_LOG_LEVEL: INFO
+    container_name: database_service
+    restart: on-failure
