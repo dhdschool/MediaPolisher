@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "media-polisher-root"
+version = "0.1.0"
+description = "Project root for the media polisher monorepo."
+authors = ["dhdschool <dhdschool@outlook.com>"]
+license = "GPL-3.0-only"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.13,<4.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# --- TOOL CONFIGURATION (Applies to all sub-packages) ---
+
+[tool.black]
+line-length = 88
+target-version = ['py313']
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+
+[tool.pylint]
+
+
+[tool.mypy]
+# Example: Global mypy settings
+ignore_missing_imports = true
+strict = true
+
+[tool.pytest.ini_options]
+# Global pytest flags
+addopts = "--strict-markers --tb=short"
+python_files = "test_*.py"

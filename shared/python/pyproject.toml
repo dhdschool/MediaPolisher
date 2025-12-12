@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "shared-libs"
+version = "0.1.0"
+description = "Shared constants and ORMS for Media Polisher."
+authors = ["dhdschool <dhdschool@outlook.com>"]
+license = "GPL-3.0-only"
+
+packages = [{include = "shared_libs", from="."}]
+
+[tool.poetry.dependencies]
+python = ">=3.13,<4.0"
+pydantic = "^2.12.5"
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
