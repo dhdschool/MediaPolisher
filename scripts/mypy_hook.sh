@@ -21,8 +21,6 @@ for SERVICE_DIR in $SERVICE_DIRS; do
 
         # 1. Change to the service directory (using the absolute path helps Mypy)
         # We save the current directory (project root) to return to it later
-        CURRENT_DIR=$(pwd)
-        cd "$SERVICE_DIR"
 
         # 2. Ensure the isolated environment is up to date based on poetry.lock
         poetry install --only main --no-root
@@ -35,10 +33,9 @@ for SERVICE_DIR in $SERVICE_DIRS; do
         # 4. Run Mypy using the service's environment.
         # We use the root pyproject.toml (../pyproject.toml) for global config.
         # We pass only the filtered files.
-        poetry run mypy --config-file ../pyproject.toml $SERVICE_FILES || EXIT_CODE=$?
+        poetry run mypy --config-file ./pyproject.toml $SERVICE_FILES || EXIT_CODE=$?
 
-        # 5. Return to the project root before checking the next service
-        cd "$CURRENT_DIR"
+
 
     else
         echo "Skipping non-service directory: $SERVICE_DIR"
