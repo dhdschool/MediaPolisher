@@ -14,11 +14,16 @@ repos:
     hooks:
       - id: flake8
         language_version: python3.13
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.19.0
+  - repo: local
     hooks:
-      - id: mypy
-        language_version: python3.13
+      - id: mypy-per-service
+        name: mypy per service
+        language: script
+        entry: ./scripts/mypy_hook.sh
+        types: [python]
+        pass_filenames: true
+        require_serial: true
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:

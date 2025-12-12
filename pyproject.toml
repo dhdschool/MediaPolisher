@@ -28,7 +28,6 @@ include_trailing_comma = true
 
 
 [tool.mypy]
-# Example: Global mypy settings
 ignore_missing_imports = true
 strict = true
 
@@ -36,3 +35,7 @@ strict = true
 # Global pytest flags
 addopts = "--strict-markers --tb=short"
 python_files = "test_*.py"
+
+[[tool.mypy.overrides]]
+module = ["pydantic_settings"]
+ignore_missing_imports = true
