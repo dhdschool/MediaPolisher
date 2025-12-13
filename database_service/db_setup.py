@@ -11,11 +11,29 @@ class Base(DeclarativeBase):
     pass
 
 
-engine = create_async_engine(Settings().DB_SERVICE_URL, echo=False)
+# Global engine and session factory with lazy initialization
+_engine = None
+_session_factory = None
 
-AsyncSessionLocal = async_sessionmaker(
-    bind=engine, class_=AsyncSession, expire_on_commit=False
-)
+
+def get_engine():
+    """Lazily initializes and returns the database engine."""
+    global _engine
+    if _engine is None:
+        _engine = create_async_engine(
+            Settings().DB_SERVICE_URL, echo=False, future=True
+        )
+    return _engine
+
+
+def get_session_factory():
+    """Lazily initializes and returns the session factory."""
+    global _session_factory
+    if _session_factory is None:
+        _session_factory = async_sessionmaker(
+            bind=get_engine(), class_=AsyncSession, expire_on_commit=False
+        )
+    return _session_factory
 
 
 async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
@@ -24,7 +42,8 @@ async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
     Yields:
         Iterator[AsyncGenerator[AsyncSession, None]]: An async session instance
     """
-    async with AsyncSessionLocal() as session:
+    session_factory = get_session_factory()
+    async with session_factory() as session:
         try:
             yield session
 
