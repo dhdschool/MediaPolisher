@@ -41,7 +41,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    config.set_main_option("sqlaclhemy.url", Settings.DB_SERVICE_URL)
+    config.set_main_option("sqlaclhemy.url", Settings().DB_SERVICE_URL)
 
     url = config.get_main_option("sqlalchemy.url")
     context.configure(
@@ -69,7 +69,7 @@ def do_run_migrations(connection: Connection) -> None:
 async def run_async_migrations() -> None:
     # Replace config section with the db url from pydantic settings
     alembic_config_section = config.get_section(config.config_ini_section, {})
-    alembic_config_section["sqlalchemy.url"] = Settings.DB_SERVICE_URL
+    alembic_config_section["sqlalchemy.url"] = Settings().DB_SERVICE_URL
 
     connectable = async_engine_from_config(
         alembic_config_section,

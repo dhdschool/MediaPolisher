@@ -35,6 +35,12 @@ extend-ignore = ["E203", "W503"]
 [tool.mypy]
 ignore_missing_imports = true
 strict = true
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
 
 [tool.pytest.ini_options]
 # Global pytest flags
