@@ -6,7 +6,7 @@ from .config import Settings
 # Base class for declarative ORM metadata
 Base = declarative_base()
 
-engine = create_async_engine(Settings.DB_SERVICE_URL, echo=False)
+engine = create_async_engine(Settings().DB_SERVICE_URL, echo=False)
 
 AsyncSessionLocal = async_sessionmaker(
     bind=engine, class_=AsyncSession, expire_on_commit=False

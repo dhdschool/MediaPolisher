@@ -2,7 +2,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    JWT_PRIVATE_KEY: str
     DB_SERVICE_URL: str
     LOG_LEVEL: str = "INFO"
 
