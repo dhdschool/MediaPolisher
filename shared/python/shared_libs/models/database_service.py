@@ -9,6 +9,7 @@ class FeedDTO(BaseModel):
     id: UUID
     url: HttpUrl
     site_url: Optional[HttpUrl]
+    description: Optional[str]
     title: Optional[str]
     is_active: bool
     last_fetched_at: Optional[datetime]
