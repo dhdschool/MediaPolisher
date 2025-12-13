@@ -1,11 +1,11 @@
 from typing import Sequence
 from uuid import UUID
 
+from shared_libs.models import FeedCreateRequest, FeedUpdateRequest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .models import Feed
-from .schemas import FeedCreateRequest, FeedUpdateRequest
 
 
 async def create_feed(db: AsyncSession, feed_data: FeedCreateRequest) -> Feed:

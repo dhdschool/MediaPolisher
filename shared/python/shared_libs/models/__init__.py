@@ -1,1 +1,1 @@
-from .database_service import FeedDTO
+from .database_service import FeedCreateRequest, FeedDTO, FeedUpdateRequest

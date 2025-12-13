@@ -1,12 +1,11 @@
 from uuid import UUID
 
 from fastapi import Depends, FastAPI, HTTPException, status
-from shared_libs.models import FeedDTO
+from shared_libs.models import FeedCreateRequest, FeedDTO, FeedUpdateRequest
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .crud import create_feed, get_all_feeds, get_feed_by_id, update_feed
 from .db_setup import get_db_session
-from .schemas import FeedCreateRequest, FeedUpdateRequest
 
 app = FastAPI()
 
