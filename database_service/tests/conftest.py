@@ -34,6 +34,8 @@ async def db_session() -> AsyncGenerator[AsyncSession, None]:
 
 @pytest_asyncio.fixture(scope="function")
 async def client(db_session: AsyncSession):
+    """Creates a test client with a fresh database session for every test."""
+
     async def override_get_db():
         yield db_session
 
