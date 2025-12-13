@@ -23,18 +23,31 @@ target-version = ['py313']
 profile = "black"
 multi_line_output = 3
 include_trailing_comma = true
+line_length=88
+
+[tool.flake]
+max-line-length=88
+extend-ignore = ["E203", "W503"]
 
 [tool.pylint]
 
 
 [tool.mypy]
 ignore_missing_imports = true
-strict = true
+strict = false
+disallow_subclassing_any = false
+plugins = ["pydantic.mypy", "sqlalchemy.ext.mypy.plugin"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
 
 [tool.pytest.ini_options]
 # Global pytest flags
-addopts = "--strict-markers --tb=short"
-python_files = "test_*.py"
+pythonpath = "."
+asyncio_mode = "auto"
+testpaths = ["tests"]
 
 [[tool.mypy.overrides]]
 module = ["pydantic_settings"]

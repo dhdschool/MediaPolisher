@@ -1,21 +1,17 @@
-env_file:
-  - .env.secrets
-
 services:
   db:
-    image: postgres:16-alpine # Lightweight and robust image
+    image: postgres:16-alpine
     container_name: media_db
     restart: always
     environment:
-      # POSTGRES variables are needed to initialize the DB and are substituted
-      # from the .env.secrets file loaded above.
-      POSTGRES_USER: ${MP_DB_USER}
-      POSTGRES_PASSWORD: ${MP_DB_PASSWORD}
-      POSTGRES_DB: media_polisher_db
+      - POSTGRES_USER=${MP_DB_USER}
+      - POSTGRES_PASSWORD=${MP_DB_PASSWORD}
+      - POSTGRES_DB=media_polisher_db
     ports:
-      - "5432:5432" # Optional: Expose for local SQL client access
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql:ro
 
   api-gateway:
     build:
@@ -27,9 +23,9 @@ services:
     ports:
       - "8080:8000"
     environment:
-      - MP_JWT_PRIVATE_KEY: ${MP_JWT_PRIVATE_KEY}
-      - MP_DB_SERVICE_URL: http://database-service:8000
-      - MP_LOG_LEVEL: INFO
+      - MP_JWT_PRIVATE_KEY=${MP_JWT_PRIVATE_KEY}
+      - MP_DB_SERVICE_URL=http://database-service:8000
+      - MP_LOG_LEVEL=INFO
 
     depends_on:
       - database-service
@@ -39,8 +35,13 @@ services:
       context: .
       dockerfile: ./database_service/Dockerfile
     environment:
-      - MP_DB_SERVICE_URL: postgresql+asyncpg://${MP_DB_USER}:${MP_DB_PASSWORD}@db:5432/media_polisher_db
-      - MP_JWT_PRIVATE_KEY: ${MP_JWT_PRIVATE_KEY}
-      - MP_LOG_LEVEL: INFO
+      - MP_DB_SERVICE_URL=postgresql+asyncpg://${MP_DB_USER}:${MP_DB_PASSWORD}@db:5432/media_polisher_db
+      - MP_JWT_PRIVATE_KEY=${MP_JWT_PRIVATE_KEY}
+      - MP_LOG_LEVEL=INFO
     container_name: database_service
     restart: on-failure
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
