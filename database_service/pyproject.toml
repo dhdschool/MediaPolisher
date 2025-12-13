@@ -11,6 +11,7 @@ python = ">=3.13,<4.0"
 
 fastapi = ">=0.123.10,<0.124.0"
 uvicorn = {extras = ["standard"], version = "^0.23.2"}
+httpx = "^0.28.1"
 
 # Local service
 shared-libs = {path = "../shared/python", develop = true}
