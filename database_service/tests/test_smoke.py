@@ -2,7 +2,7 @@ import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database_service.models import Feed
+from ..models import Feed
 
 
 @pytest.mark.asyncio

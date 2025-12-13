@@ -45,8 +45,9 @@ warn_required_dynamic_aliases = true
 
 [tool.pytest.ini_options]
 # Global pytest flags
-addopts = "--strict-markers --tb=short"
-python_files = "test_*.py"
+pythonpath = "."
+asyncio_mode = "auto"
+testpaths = ["tests"]
 
 [[tool.mypy.overrides]]
 module = ["pydantic_settings"]

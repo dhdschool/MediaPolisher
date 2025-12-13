@@ -3,7 +3,7 @@ from typing import AsyncGenerator
 import pytest_asyncio
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
-from database_service.db_setup import Base
+from ..db_setup import Base
 
 TEST_DB_URL = "sqlite+aiosqlite:///:memory:"
 
