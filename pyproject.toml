@@ -23,6 +23,11 @@ target-version = ['py313']
 profile = "black"
 multi_line_output = 3
 include_trailing_comma = true
+line_length=88
+
+[tool.flake]
+max-line-length=88
+extend-ignore = ["E203", "W503"]
 
 [tool.pylint]
 
