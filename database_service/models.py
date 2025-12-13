@@ -31,6 +31,6 @@ class Feed(UUIDMixin, TimestampMixin, Base):
     error_count: Mapped[int] = mapped_column(Integer, default=0)
 
     # Poll frequency in seconds
-    poll_frequnecy: Mapped[int] = mapped_column(
+    poll_frequency: Mapped[int] = mapped_column(
         Integer, default=600
     )  # Default to 10 minutes

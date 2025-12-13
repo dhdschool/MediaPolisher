@@ -1,10 +1,11 @@
 from typing import Sequence
 from uuid import UUID
 
-from models import Feed
-from schemas import FeedCreateRequest, FeedUpdateRequest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from .models import Feed
+from .schemas import FeedCreateRequest, FeedUpdateRequest
 
 
 async def create_feed(db: AsyncSession, feed_data: FeedCreateRequest) -> Feed:
@@ -20,7 +21,7 @@ async def create_feed(db: AsyncSession, feed_data: FeedCreateRequest) -> Feed:
     db_feed = Feed(
         url=str(feed_data.url),
         title=feed_data.title,
-        site_url=feed_data.site_url,
+        site_url=str(feed_data.site_url) if feed_data.site_url else None,
         description=feed_data.description,
         poll_frequency=feed_data.poll_frequency,
     )
