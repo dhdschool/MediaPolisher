@@ -1,10 +1,11 @@
 # Docker boilerplate
 
 # Build stage: Install poetry and build venv
-FROM python:3.13-slim as builder
+FROM python:3.13-slim AS builder
 
 # Change this to current service dir name
-ENV SERVICE_DIR=database_service
+ARG SERVICE_DIR=database_service
+
 
 ENV POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=1 \
@@ -34,7 +35,8 @@ WORKDIR /project/${SERVICE_DIR}
 RUN poetry install --no-root --only main
 
 # Runtime stage: Copy code
-FROM python:3.13-slim as runtime
+FROM python:3.13-slim AS runtime
+ARG SERVICE_DIR=database_service
 
 ENV VIRTUAL_ENV=/project/${SERVICE_DIR}/.venv \
     PATH="/project/${SERVICE_DIR}/.venv/bin:$PATH"
