@@ -13,6 +13,7 @@ fastapi = ">=0.123.10,<0.124.0"
 uvicorn = {extras = ["standard"], version = "^0.23.2"}
 SQLAlchemy = "^2.0.45"
 asyncpg = "^0.31.0"
+alembic = "^1.17.2"
 
 # Local service
 shared-libs = {path = "../shared/python", develop = true}
